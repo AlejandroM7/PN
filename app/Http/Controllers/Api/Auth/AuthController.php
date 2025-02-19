@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Api\Auth\AuthRequest;
@@ -10,33 +11,32 @@ use App\Http\Resources\Api\User\UserResource;
 
 class AuthController extends Controller
 {
-    public function store(AuthRequest $request)
+    public function store(AuthRequest $request): JsonResponse
     {
         try {
-            // Intenta autenticar al usuario
+        
             if (Auth::attempt($request->only('email', 'password'))) {
-                // Si la autenticación es exitosa, genera el token
                 $user = Auth::user();
                 $token = $user->createToken('token-name')->plainTextToken;
 
-                return response()->json(['message' => 'Successfully generated token.', 'token' => $token], 200);
+                return response()->json(['message' => 'Token generado exitosamente.', 'token' => $token], 200);
             } else {
-                return response()->json(['error' => 'Unauthenticated user'], 401);
+                return response()->json(['error' => 'Credenciales incorrectas. Verifica tu correo y contraseña.'], 401);
             }
         } catch (\Throwable $exception) {
-            // Captura cualquier excepción y devuelve un error genérico
-            return response()->json(['error' => 'Something went wrong: ' . $exception->getMessage()], 500);
+
+            return response()->json(['error' => 'Ocurrió un error: ' . $exception->getMessage()], 500);
         }
     }
 
-    public function token(Request $request)
+    public function token(Request $request): UserResource
     {
         $user = $request->user();
 
         return new UserResource($user);
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request): void
     {
         Auth::guard('web')->logout();
         $request->session()->invalidate();

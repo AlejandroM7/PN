@@ -13,4 +13,4 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', [HomeController::class, 'api']);
+Route::get('/', [HomeController::class, 'web'])->name('index.home');

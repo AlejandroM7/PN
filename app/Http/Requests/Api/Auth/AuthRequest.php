@@ -30,12 +30,12 @@ class AuthRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'The EMAIL field is required.',
-            'email.string' => 'The EMAIL field must be a string.',
-            'email.email' => 'The EMAIL field must be a valid email address.',
-
-            'password.required' => 'The PASSWORD field is required.',
-            'password.string' => 'The PASSWORD field must be a string.'
+          'email.required' => 'El campo correo electrónico es obligatorio.',
+          'email.string' => 'El correo electrónico debe ser una cadena de texto.',
+          'email.email' => 'El correo electrónico debe ser una dirección válida.',
+  
+          'password.required' => 'El campo contraseña es obligatorio.',
+          'password.string' => 'La contraseña debe ser una cadena de texto.',
         ];
     }
 

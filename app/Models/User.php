@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Support\Str;
 use App\Traits\UseSlugAsKey;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, UseSlugAsKey;
+    use HasApiTokens, HasRoles, HasFactory, Notifiable, SoftDeletes, UseSlugAsKey;
 
     /**
      * The attributes that are mass assignable.
@@ -33,7 +34,7 @@ class User extends Authenticatable
         'password', 
         'phone',
         'gender',
-
+        'birthday',
     ];
 
     public static function boot()
@@ -64,6 +65,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'birthday' => 'date',
         ];
     }
 }
